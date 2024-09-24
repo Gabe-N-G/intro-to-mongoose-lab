@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 const Cust = require('./models/cust.js');
 
 //testing prompt
-const prompt = require('prompt-sync')();
-const username = prompt('What is your name? ');
-console.log(`Your name is ${username}`);
+// const prompt = require('prompt-sync')();
+// const username = prompt('What is your name? ');
+// console.log(`Your name is ${username}`);
 //end prompt testing
 
 const connect = async () => {
@@ -27,6 +27,9 @@ const connect = async () => {
     process.exit();
   };
   
+  /*
+    find commands
+
   const runQueries = async () => {
     console.log('Queries running.')
     // The functions calls to run queries in our db will go here as we write them.
@@ -38,5 +41,6 @@ const connect = async () => {
     const todoFindOne = await Todo.find({ text: "Learn VIM" });
     console.log(todoFindOne)
   };
-  
+  */
+
   connect()
