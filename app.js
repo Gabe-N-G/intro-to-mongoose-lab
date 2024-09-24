@@ -10,6 +10,20 @@ const Cust = require('./models/cust.js');
 // console.log(`Your name is ${username}`);
 //end prompt testing
 
+const createCust = async () => {
+
+    const custData = [
+      {
+        name: "Test",
+        age: 1234,
+      }, 
+    ]
+  
+    const cust = await Cust.create(custData);
+    console.log('New todo', cust);
+  };
+
+
 const connect = async () => {
     // Connect to MongoDB using the MONGODB_URI specified in our .env file.
     await mongoose.connect(process.env.MONGODB_URI);
@@ -26,7 +40,11 @@ const connect = async () => {
     // Close our app, bringing us back to the command line.
     process.exit();
   };
-  
+  const runQueries = async () => {
+    await createCust();
+  }
+
+
   /*
     find commands
 
