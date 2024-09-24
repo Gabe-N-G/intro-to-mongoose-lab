@@ -4,18 +4,20 @@ const mongoose = require('mongoose');
 
 const Cust = require('./models/cust.js');
 
-//testing prompt
-// const prompt = require('prompt-sync')();
-// const username = prompt('What is your name? ');
-// console.log(`Your name is ${username}`);
+// testing prompt
+const prompt = require('prompt-sync')();
+const username = prompt('What is your name? ');
+console.log(`Your name is ${username}`);
+const userAge = prompt('how old are you? ')
+console.log(`You are ${userAge} years old`)
 //end prompt testing
 
 const createCust = async () => {
 
     const custData = [
       {
-        name: "Test",
-        age: 1234,
+        name: username,
+        age: userAge,
       }, 
     ]
   
