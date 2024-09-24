@@ -6,39 +6,46 @@ const Cust = require('./models/cust.js');
 
 // testing prompt
 const prompt = require('prompt-sync')();
-const choice = prompt(`
-    What would you like to do?
+// const choice = prompt(`
+//     What would you like to do?
     
-    (C)reate a customer
-    (R)ead all customers
-    (U)pdate a customer
-    (D)elete a customer
+//     (C)reate a customer
+//     (R)ead all customers
+//     (U)pdate a customer
+//     (D)elete a customer
     
-    or quit
+//     or quit
     
-    `)
-switch(choice){
-    case "C":
-        console.log("Create!")
-        const username = prompt('What is your name? ');
-        console.log(`Your name is ${username}`);
-        const userAge = prompt('how old are you? ')
-        console.log(`You are ${userAge} years old`)
-        break
-    case "R":
-        console.log("Read!")
-        break
-    case "U":
-        console.log("Update!")
-        break
-    case "D":
-        console.log("Delete!")
-        break 
-    default:
-        console.log(`Please try again`);        
-}
-
+//     `)
+// switch(choice){
+//     case "C":
+//         console.log("Create!")
+//         let username = prompt('What is your name? ');
+//         console.log(`Your name is ${username}`);
+//         let userAge = prompt('how old are you? ')
+//         console.log(`You are ${userAge} years old`)
+//         break 
+//     case "R":
+//         console.log("Read!")
+//         break
+//     case "U":
+//         console.log("Update!")
+//         break
+//     case "D":
+//         console.log("Delete!")
+//         break 
+//     default:
+//         console.log(`Exiting...`);        
+// }
 //end prompt testing
+
+/* working prompts for create
+
+ let username = prompt('What is your name? ');
+    console.log(`Your name is ${username}`);
+    let userAge = prompt('how old are you? ')
+    console.log(`You are ${userAge} years old`)
+*/
 
 const createCust = async () => {
 
@@ -72,7 +79,10 @@ const connect = async () => {
   };
 
   const runQueries = async () => {
-    await createCust();
+    // await createCust(); creates a customer
+
+    const Custs = await Cust.find({})
+    console.log(Custs)
   }
 
 
