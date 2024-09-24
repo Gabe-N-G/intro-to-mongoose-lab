@@ -6,10 +6,38 @@ const Cust = require('./models/cust.js');
 
 // testing prompt
 const prompt = require('prompt-sync')();
-const username = prompt('What is your name? ');
-console.log(`Your name is ${username}`);
-const userAge = prompt('how old are you? ')
-console.log(`You are ${userAge} years old`)
+const choice = prompt(`
+    What would you like to do?
+    
+    (C)reate a customer
+    (R)ead all customers
+    (U)pdate a customer
+    (D)elete a customer
+    
+    or quit
+    
+    `)
+switch(choice){
+    case "C":
+        console.log("Create!")
+        const username = prompt('What is your name? ');
+        console.log(`Your name is ${username}`);
+        const userAge = prompt('how old are you? ')
+        console.log(`You are ${userAge} years old`)
+        break
+    case "R":
+        console.log("Read!")
+        break
+    case "U":
+        console.log("Update!")
+        break
+    case "D":
+        console.log("Delete!")
+        break 
+    default:
+        console.log(`Please try again`);        
+}
+
 //end prompt testing
 
 const createCust = async () => {
@@ -42,6 +70,7 @@ const connect = async () => {
     // Close our app, bringing us back to the command line.
     process.exit();
   };
+
   const runQueries = async () => {
     await createCust();
   }
