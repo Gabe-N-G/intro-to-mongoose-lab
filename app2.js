@@ -7,7 +7,7 @@ const prompt = require('prompt-sync')();
  
 function getStarted(){
     
-    console.log(`Connected to Customer API
+    console.log(`            
             What would you like to do?
     
             (C)reate a customer
@@ -20,6 +20,29 @@ function getStarted(){
     const choice = prompt("Please put a letter in to choose")
     runQueries(choice)
   };
+
+  async function createCustomer(){
+    let username = prompt('What is your name? ');
+    console.log(`Hello ${username}!`);
+    let userAge = prompt('How old are you? ')
+
+    
+    const newCust = await Cust.create({
+    name: username,
+    age: userAge,
+    });
+
+  console.log("Customer created!",newCust);
+  getStarted();
+
+  }
+
+  async function viewCustomers(){
+    customers = await Cust.find()
+    console.log(customers)
+
+    getStarted()
+  }
 
   async function runQueries(choice) {
     switch (choice) {
@@ -41,7 +64,7 @@ function getStarted(){
         break;
       case "Q":
         console.log("Quit!")
-        console.log("Thanks for joining! Have a great day.");
+        console.log("Thank you! Have a great day.");
         await mongoose.disconnect();
         break;
       default:
@@ -53,7 +76,7 @@ function getStarted(){
 
   const connect = async () => {
     try
-    {a
+    {
         await mongoose.connect(process.env.MONGODB_URI);
         console.log("Connected to Customer API");
         } catch {
