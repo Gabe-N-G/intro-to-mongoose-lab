@@ -1,68 +1,126 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const mongoose = require('mongoose');
-
 const Cust = require('./models/cust.js');
-
-// testing prompt
 const prompt = require('prompt-sync')();
-// const choice = prompt(`
-//     What would you like to do?
-    
-//     (C)reate a customer
-//     (R)ead all customers
-//     (U)pdate a customer
-//     (D)elete a customer
-    
-//     or quit
-    
-//     `)
-// switch(choice){
-//     case "C":
-//         console.log("Create!")
-//         let username = prompt('What is your name? ');
-//         console.log(`Your name is ${username}`);
-//         let userAge = prompt('how old are you? ')
-//         console.log(`You are ${userAge} years old`) 
-//         break 
-//     case "R":
-//         console.log("Read!")
-//         break
-//     case "U":
-//         console.log("Update!")
-//         break
-//     case "D":
-//         console.log("Delete!")
-//         break 
-//     default:
-//         console.log(`Exiting...`);        
-// }
-//end prompt testing
 
-/* working prompts for create
- let username = prompt('What is your name? ');
-    console.log(`Your name is ${username}`);
-    let userAge = prompt('how old are you? ')
-    console.log(`You are ${userAge} years old`)
-*/
+ 
+function getStarted(){
+    
+    console.log(`            
+            What would you like to do?
+    
+            (C)reate a customer
+            (R)ead all customers
+            (U)pdate a customer
+            (D)elete a customer
+    
+            or (Q)uit`);
 
-const createCust = async () => {
-    const custData = [
-      {
-        name: username,
-        age: userAge,
-      }, 
-    ]
-    const cust = await Cust.create(custData);
-    console.log('New todo', cust);
+    const choice = prompt("Please put a letter in to choose")
+    runQueries(choice)
   };
 
+  async function createCustomer(){
+    let username = prompt('What is your name? ');
+    console.log(`Hello ${username}!`);
+    let userAge = prompt('How old are you? ')
 
-const connect = async () => {
-    // Connect to MongoDB using the MONGODB_URI specified in our .env file.
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('Connected to MongoDB');
+    
+    const newCust = await Cust.create({
+    name: username,
+    age: userAge,
+    });
+
+  console.log("Customer created!",newCust);
+  getStarted();
+
+  }
+
+  async function viewCustomers(){
+    customers = await Cust.find()
+    console.log(customers)
+
+    getStarted()
+  }
+
+  async function updateCustomer(){
+    const findUserNamed = prompt("What is the customer name you are looking to update? ");
+    foundUser = await Cust.findOne({name:findUserNamed})
+    console.log("You are changing" + foundUser)
+
+    const newUserName = prompt("What is the new name? ")
+    const newUserAge = prompt("What is the new age? ")
+    
+    const updatedUser = await foundUser.updateOne({
+        name: newUserName,
+        age: newUserAge,
+    })
+    console.log("changed!")
+    getStarted()
+  }
+
+  async function deleteCustomer(){
+    const findUserID = prompt("Please type out the ID of the User you would like to delete (read all customers to get ids)")
+
+    foundID = await Cust.findById(findUserID)
+    console.log("Do you want to delete",foundID)
+    const choice = prompt(`
+        Hit Y to delete
+        Or any other button to return
+        `)
+    if (choice === "Y"){
+        console.log("customer deleted!")
+        await foundID.deleteOne()
+    } else {
+        getStarted()
+    }
+  }
+
+  async function runQueries(choice) {
+    switch (choice) {
+      case "C":
+        console.log("Create!")
+        await createCustomer();
+        break;
+      case "R":
+        console.log("Read!")
+        await viewCustomers();
+        break;
+      case "U":
+        console.log("Update!")
+        await updateCustomer();
+        break;
+      case "D":
+        console.log("DESTROY")
+        await deleteCustomer();
+        break;
+      case "Q":
+        console.log("Quit!")
+        console.log("Thank you! Have a great day.");
+        await mongoose.disconnect();
+        break;
+      default:
+        console.log("Invalid input please try again")
+        getStarted()
+    }
+  }
   
+
+  const connect = async () => {
+    try
+    {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("Connected to Customer API");
+        getStarted()
+        } catch {
+    console.log("Oh god everything has gone wrong")
+   }
+    getStarted();
+  };
+  
+  connect();
+/*
     // Call the runQueries function, which will eventually hold functions to work
     // with data in our db.
     await runQueries()
@@ -73,35 +131,4 @@ const connect = async () => {
   
     // Close our app, bringing us back to the command line.
     process.exit();
-  };
-
-  const runQueries = async () => {
-    //creates a new customer
-    await createCust();
-
-    /* reads all customers
-    const Custs = await Cust.find({})
-    console.log(Custs)
-    */
-
-
-  }
-
-
-  /*
-    find commands
-
-  const runQueries = async () => {
-    console.log('Queries running.')
-    // The functions calls to run queries in our db will go here as we write them.
-    // await createTodo();
-    const todos = await Todo.find({});
-    // console.log(todos)
-    const todoById = await Todo.findById('66f2dc3369b539f92c1eea2d');
-    // console.log(todoById);
-    const todoFindOne = await Todo.find({ text: "Learn VIM" });
-    console.log(todoFindOne)
-  };
-  */
-
-  connect()
+*/
