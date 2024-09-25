@@ -23,7 +23,7 @@ const prompt = require('prompt-sync')();
 //         let username = prompt('What is your name? ');
 //         console.log(`Your name is ${username}`);
 //         let userAge = prompt('how old are you? ')
-//         console.log(`You are ${userAge} years old`)
+//         console.log(`You are ${userAge} years old`) 
 //         break 
 //     case "R":
 //         console.log("Read!")
@@ -40,7 +40,6 @@ const prompt = require('prompt-sync')();
 //end prompt testing
 
 /* working prompts for create
-
  let username = prompt('What is your name? ');
     console.log(`Your name is ${username}`);
     let userAge = prompt('how old are you? ')
@@ -48,14 +47,12 @@ const prompt = require('prompt-sync')();
 */
 
 const createCust = async () => {
-
     const custData = [
       {
         name: username,
         age: userAge,
       }, 
     ]
-  
     const cust = await Cust.create(custData);
     console.log('New todo', cust);
   };
@@ -79,10 +76,15 @@ const connect = async () => {
   };
 
   const runQueries = async () => {
-    // await createCust(); creates a customer
+    //creates a new customer
+    await createCust();
 
+    /* reads all customers
     const Custs = await Cust.find({})
     console.log(Custs)
+    */
+
+
   }
 
 
